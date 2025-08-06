@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -35,7 +34,7 @@ function App() {
 
   return (
     <main>
-      <div className="container">
+      <div className="container bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full">
         <header>
           <h1>Pretty Form</h1>
           <p>A lightweight React webpage</p>
