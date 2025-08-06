@@ -1,98 +1,28 @@
-import { useState } from 'react'
+import { useState } from "react";
+import schema from "../form/example-data-schema.json";
+import { Form } from "@rjsf/daisyui";
+import validator from "@rjsf/validator-ajv8";
 
 function App() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
-  const [submitted, setSubmitted] = useState(false)
-
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
-    // In a real app, you'd send this data to a server
-    console.log('Form submitted:', formData)
-  }
-
-  const resetForm = () => {
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    })
-    setSubmitted(false)
-  }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
+    e.preventDefault();
+    console.log(e.target.value);
+  };
 
   return (
     <main>
-      <div className="container bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full">
-        <header>
+      <div className="">
+        <header className="m-10">
           <h1>Pretty Form</h1>
           <p>A lightweight React webpage</p>
         </header>
 
-        {!submitted ? (
-          <form onSubmit={handleSubmit} className="form">
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input 
-                id="name"
-                name="name"
-                type="text" 
-                value={formData.name}
-                onChange={handleInputChange}
-                required 
-                placeholder="Enter your name"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input 
-                id="email"
-                name="email"
-                type="email" 
-                value={formData.email}
-                onChange={handleInputChange}
-                required 
-                placeholder="Enter your email"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">Message</label>
-              <textarea 
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                required 
-                placeholder="Enter your message"
-                rows="4"
-              ></textarea>
-            </div>
-
-            <button type="submit" className="submit-btn">Submit</button>
-          </form>
-        ) : (
-          <div className="success">
-            <h2>Thank you!</h2>
-            <p>Your message has been submitted successfully.</p>
-            <button onClick={resetForm} className="reset-btn">Send Another Message</button>
-          </div>
-        )}
+        <div className="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full flex justify-center">
+          <Form schema={schema} validator={validator} onSubmit={handleSubmit} />
+        </div>
       </div>
     </main>
-  )
+  );
 }
 
-export default App 
+export default App;
