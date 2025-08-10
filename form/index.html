@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IFRAME Test</title>
+  </head>
+  <body>
+    <script type="module">
+      window.addEventListener("message", (event) => {
+        // Do we trust the sender of this message?
+        // if (event.origin !== "http://example.com:8080") return;
+
+        // event.source is window.opener
+        // event.data is "hello there!"
+
+        // Assuming you've verified the origin of the received message (which
+        // you must do in any case), a convenient idiom for replying to a
+        // message is to call postMessage on event.source and provide
+        // event.origin as the targetOrigin.
+        event.source.postMessage(
+          "addEventListener - message received",
+          {
+            origin: event.origin,
+            data: event.data,
+          }
+        );
+
+        const root = document.getElementById("root");
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = JSON.stringify(event.data);
+        root.appendChild(paragraph);
+      });
+    </script>
+
+    <main>Iframe tester</main>
+
+    <div id="root"></div>
+  </body>
+</html>
