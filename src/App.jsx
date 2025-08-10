@@ -1,8 +1,6 @@
-import { useState } from "react";
 import schema from "../form/example-data-schema.json";
 import { Form } from "@rjsf/daisyui";
 import validator from "@rjsf/validator-ajv8";
-import Test from "./test";
 import CyoaApp from "./cyoa-app";
 
 function App() {
@@ -11,21 +9,35 @@ function App() {
     console.log(e.target.value);
   };
 
+  function msgToIframe(event, data) {
+    console.log(msgToIframe, {
+      event,
+      data,
+    });
+
+    document
+      .getElementById("cross_domain_page")
+      .contentWindow.postMessage({ test: "value" }, window.location.origin);
+  }
+
   return (
-    <main>
-      <div className="">
-        <header className="m-10">
-          <h1>Pretty Form</h1>
-          <p>A lightweight React webpage</p>
-        </header>
-
-        <Test />
-
-        <CyoaApp />
-
-        <div className="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full flex justify-center">
+    <main className="bg-gray-100 min-h-screen w-full flex flex-row">
+      <div className="w-1/2 mx-auto">
+        <div className="bg-white p-8 max-w-2xl w-full flex justify-center">
           <Form schema={schema} validator={validator} onSubmit={handleSubmit} />
         </div>
+      </div>
+
+      <div className="w-1/2 mx-auto">
+        <button
+          onClick={() => {
+            msgToIframe();
+          }}
+        >
+          Test Post Message
+        </button>
+
+        <CyoaApp />
       </div>
     </main>
   );

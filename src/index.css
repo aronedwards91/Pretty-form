@@ -16,8 +16,7 @@ body {
   justify-content: center;
 }
 
-main {
+root {
   width: 100%;
-  max-width: 500px;
-  padding: 2rem;
+  flex: 1;
 }
