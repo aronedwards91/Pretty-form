@@ -1,9 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@source "../node_modules/@rjsf/core";
+@source "../node_modules/@rjsf/daisyui";
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
