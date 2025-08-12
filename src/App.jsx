@@ -3,8 +3,10 @@ import { Form } from "@rjsf/daisyui";
 import validator from "@rjsf/validator-ajv8";
 import initFormData from "./init-form-data.json";
 
+
 function App() {
   console.log('>>>initFormData', initFormData);
+  console.log('>>>import.meta.env.VITE_APP_URL', import.meta.env.VITE_APP_URL);
 
   const handleSubmit = (e) => {
     console.log('>>>handleSubmit', e);
@@ -20,7 +22,7 @@ function App() {
     // include type:config
     document
       .getElementById("cross_domain_page")
-      .contentWindow.postMessage({type:"config", config: data}, "http://localhost:5173");
+      .contentWindow.postMessage({type:"config", config: data}, import.meta.env.VITE_APP_URL);
   }
 
   return (
@@ -32,7 +34,7 @@ function App() {
       </div>
 
       <div className="w-1/2 mx-auto">
-        <iframe id="cross_domain_page" src="http://localhost:5173?src=msg" height="500px" width="500px"></iframe>
+        <iframe id="cross_domain_page" src={`${import.meta.env.VITE_APP_URL}?src=msg`} height="500px" width="500px"></iframe>
       </div>
     </main>
   );
