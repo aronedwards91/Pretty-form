@@ -26,15 +26,17 @@ function App() {
   }
 
   return (
-    <main className="bg-gray-100 min-h-screen w-full flex flex-row">
-      <div className="w-1/2 mx-auto">
-        <div className="bg-white p-8 max-w-2xl w-full flex justify-center">
+    <main className="bg-gray-100 min-h-screen w-full flex flex-row" style={{width: '100vw'}}>
+      <div className="w-1/2 mx-auto bg-gray-200 max-h-screen h-screen overflow-y-scroll">
+        <div className="p-8 max-w-2xl w-full flex justify-center">
           <Form schema={schema} validator={validator} onSubmit={handleSubmit} formData={initFormData} />
         </div>
       </div>
 
-      <div className="w-1/2 mx-auto">
-        <iframe id="cross_domain_page" src={`${import.meta.env.VITE_APP_URL}?src=msg`} height="500px" width="500px"></iframe>
+      <div className="w-1/2 mx-auto max-h-screen h-screen bg-gray-300">
+        <div className="w-full h-full overflow-y-scroll">
+          <iframe id="cross_domain_page" src={`${import.meta.env.VITE_APP_URL}?src=msg`} height="100%" width="100%"></iframe>
+        </div>
       </div>
     </main>
   );
