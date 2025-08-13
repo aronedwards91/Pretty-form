@@ -118,7 +118,7 @@
       "description": "Array of choice sections in the CYOA",
       "items": {
         "type": "object",
-        "required": ["title", "description", "style", "choicesUnique", "maxChoices", "options"],
+        "required": ["title", "description", "style", "maxChoices", "options"],
         "properties": {
           "title": {
             "type": "string",
