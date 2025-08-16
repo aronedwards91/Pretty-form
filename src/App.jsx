@@ -3,6 +3,7 @@ import { Form } from "@rjsf/daisyui";
 import validator from "@rjsf/validator-ajv8";
 import initFormData from "./init-form-data.json";
 import { useEffect, useRef } from "react";
+import SaveMenu from "./SaveMenu";
 
 function App() {
   console.log(">>>initFormData", initFormData);
@@ -52,12 +53,20 @@ function App() {
     };
   }, []);
 
+  const handleLoad = (data) => {
+    console.log(">>>handleLoad", data);
+    formRef.current.setFormData(data);
+  };
+
   return (
     <main
       className="bg-gray-100 min-h-screen w-full flex flex-row"
       style={{ width: "100vw" }}
     >
       <div className="w-1/2 mx-auto bg-gray-200 max-h-screen h-screen overflow-y-scroll relative">
+      <div className="mt-8 mx-8 flex justify-end gap-8">
+        <SaveMenu onLoad={handleLoad} formRef={formRef} />
+      </div>
         <div className="p-8 max-w-2xl w-full flex justify-center">
           <Form
             ref={formRef}
