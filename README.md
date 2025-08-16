@@ -1,14 +1,6 @@
-# Pretty Form
+# CYOA Interactive Form
 
-A lightweight React webpage with a beautiful form interface.
-
-## Features
-
-- Modern, responsive design
-- Form validation
-- Success state handling
-- Gradient styling
-- Mobile-friendly layout
+Create a Interactive Choose Your Own Adventure via a web form
 
 ## Getting Started
 
@@ -61,10 +53,3 @@ src/
 └── main.jsx         # React entry point
 ```
 
-## Migration Notes
-
-This project was migrated from Svelte to React. The functionality remains the same:
-- Form with name, email, and message fields
-- Form validation and submission handling
-- Success state with reset functionality
-- Responsive design with gradient styling
