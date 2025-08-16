@@ -4,7 +4,7 @@ const SAVE_KEY = "formSaves";
 const SAVE_SLOT_COUNT = 10;
 
 const SaveMenu = ({ onLoad, formRef }) => {
-  const [saves, setSaves] = useState({});
+  const [saves, setSaves] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [saveName, setSaveName] = useState("");
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -18,8 +18,13 @@ const SaveMenu = ({ onLoad, formRef }) => {
     const loadSaves = () => {
       try {
         const savedData = localStorage.getItem(SAVE_KEY);
-        if (savedData) {
-          setSaves(JSON.parse(savedData));
+        const parsedData = JSON.parse(savedData);
+        if (savedData && Array.isArray(parsedData)) {
+          if (Array.isArray(parsedData)) {
+            setSaves(parsedData);
+          } else {
+            localStorage.setItem(SAVE_KEY, JSON.stringify([]));
+          }
         }
       } catch (error) {
         console.error("Error loading saves:", error);
@@ -27,15 +32,6 @@ const SaveMenu = ({ onLoad, formRef }) => {
     };
     loadSaves();
   }, []);
-
-  // Save to localStorage whenever saves state changes
-  useEffect(() => {
-    try {
-      localStorage.setItem("formSaves", JSON.stringify(saves));
-    } catch (error) {
-      console.error("Error saving to localStorage:", error);
-    }
-  }, [saves]);
 
   // Handle dialog open/close
   useEffect(() => {
@@ -46,23 +42,32 @@ const SaveMenu = ({ onLoad, formRef }) => {
     }
   }, [showSaveMenu]);
 
+  const syncSavesToLocalStorage = (newSave, index) => {
+    const newSaves = [...saves];
+    newSaves[index] = newSave;
+    localStorage.setItem(SAVE_KEY, JSON.stringify(newSaves));
+    setSaves(newSaves);
+  };
+
   const handleSave = (slotNumber) => {
-    if (!formRef.current) {
+    if (saveName === "") {
+      alert("Please enter a save name");
+      return;
+    }
+
+    if (!formRef.current?.state?.formData) {
       alert("No form data to save!");
       return;
     }
 
-    console.log(">>>formRef.current.formData", formRef.current.formData);
-
-    const newSaves = {
-      ...saves,
-      [slotNumber]: {
-        data: formRef.current.formData,
+    syncSavesToLocalStorage(
+      {
+        data: formRef.current.state.formData,
         name: saveName || `Save ${slotNumber}`,
         timestamp: new Date().toISOString(),
       },
-    };
-    setSaves(newSaves);
+      slotNumber
+    );
     setSaveName("");
     setSelectedSlot(null);
   };
@@ -129,7 +134,9 @@ const SaveMenu = ({ onLoad, formRef }) => {
       <dialog
         open={false}
         ref={dialogRef}
-        className={`w-auto h-auto bg-white rounded-lg flex flex-col m-12 overflow-hidden backdrop:bg-black backdrop:bg-opacity-50 ${showSaveMenu ? "block" : "hidden"}`}
+        className={`w-auto h-auto bg-white rounded-lg flex flex-col m-12 overflow-hidden backdrop:bg-black backdrop:bg-opacity-50 ${
+          showSaveMenu ? "block" : "hidden"
+        }`}
         onClose={handleClose}
       >
         {/* Header */}
@@ -246,6 +253,7 @@ const SaveMenu = ({ onLoad, formRef }) => {
                 </label>
                 <input
                   type="text"
+                  required
                   value={saveName}
                   onChange={(e) => setSaveName(e.target.value)}
                   placeholder={`Save ${selectedSlot}`}
