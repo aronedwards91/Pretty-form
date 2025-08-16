@@ -27,9 +27,9 @@
       ]
     },
     "title": {
-      "cyoaName": "Deep Forest CYOA",
+      "cyoaName": "Example CYOA",
       "tagline": "an Adventure",
-      "author": "me",
+      "author": "you",
       "version": "0.1"
     },
     "intro": {
@@ -236,7 +236,7 @@
       "text": {
         "familyMain": "'Sedan SC', sans",
         "rootSize": "18px",
-        "textColor": "#000fff"
+        "textColor": "#e5e7eb"
       },
       "paragraph": {
         "lineHeight": "1.7",
@@ -245,7 +245,7 @@
       },
       "main": {
         "backgroundColor": "linear-gradient(61deg, rgba(73,101,1,1) -20%, rgba(92,123,20,1) 57%, rgba(2,60,64,1) 130%);",
-        "textColor": "#023C40",
+        "textColor": "#b2f9f0",
         "cardColor": "#023C40",
         "cardBorderColor": "#2C3D01",
         "cardBorderRadius": "0.25rem",
@@ -261,7 +261,7 @@
       },
       "sidebar": {
         "backgroundColor": "linear-gradient(61deg, rgba(73,101,1,1) -20%, rgba(92,123,20,1) 57%, rgba(2,60,64,1) 130%);",
-        "textColor": "#023C40",
+        "textColor": "#88d9ac",
         "cardColor": "#023C40",
         "cardBorderColor": "#2C3D01",
         "cardBorderRadius": "0.25rem",

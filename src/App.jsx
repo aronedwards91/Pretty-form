@@ -1,4 +1,4 @@
-import schema from "../form/example-data-schema.json";
+import schema from "../form/cyoa-schema.json";
 import { Form } from "@rjsf/daisyui";
 import validator from "@rjsf/validator-ajv8";
 import initFormData from "./init-form-data.json";
@@ -33,6 +33,13 @@ function App() {
   }
 
   const iframeRef = useRef(null);
+  const formRef = useRef(null);
+
+  const handleApplyClick = () => {
+    if (formRef.current) {
+      formRef.current.submit();
+    }
+  };
 
   // workaround for onload firing before iframe is loaded
   useEffect(() => {
@@ -50,15 +57,26 @@ function App() {
       className="bg-gray-100 min-h-screen w-full flex flex-row"
       style={{ width: "100vw" }}
     >
-      <div className="w-1/2 mx-auto bg-gray-200 max-h-screen h-screen overflow-y-scroll">
+      <div className="w-1/2 mx-auto bg-gray-200 max-h-screen h-screen overflow-y-scroll relative">
         <div className="p-8 max-w-2xl w-full flex justify-center">
           <Form
+            ref={formRef}
             schema={schema}
             validator={validator}
             onSubmit={handleSubmit}
             formData={initFormData}
           />
         </div>
+
+        <button 
+          onClick={handleApplyClick}
+          className={`fixed bottom-4 right-1/2 bg-blue-500
+          hover:bg-blue-600 text-white font-semibold
+          py-2 px-4 rounded-lg shadow-lg
+          cursor-pointer transition-colors duration-200
+          `}>
+          Apply
+        </button>
       </div>
 
       <div className="w-1/2 mx-auto max-h-screen h-screen bg-gray-300">
