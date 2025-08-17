@@ -4,6 +4,7 @@ import validator from "@rjsf/validator-ajv8";
 import initFormData from "./init-form-data.json";
 import { useEffect, useRef, useState } from "react";
 import SaveMenu from "./SaveMenu";
+import ExportForm from "./components/ExportForm";
 
 function App() {
   const [formData, setFormData] = useState(initFormData);
@@ -61,8 +62,10 @@ function App() {
       style={{ width: "100vw" }}
     >
       <div className="w-1/2 mx-auto bg-gray-200 max-h-screen h-screen overflow-y-scroll relative">
-      <div className="mt-8 mx-8 flex justify-end gap-8">
+      <div className="mt-8 mx-8 flex justify-end gap-4">
         <SaveMenu onLoad={handleLoad} formRef={formRef} />
+        <ExportForm formData={formData} />
+        {/* <Button disabled onClick={() => {}}>Create CYOA</Button> */}
       </div>
         <div className="p-8 max-w-2xl w-full flex justify-center">
           <Form

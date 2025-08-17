@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Button from "./components/Button";
 
 const SAVE_KEY = "formSaves";
 const SAVE_SLOT_COUNT = 24;
@@ -125,12 +126,11 @@ const SaveMenu = ({ onLoad, formRef }) => {
   return (
     <>
       {/* Save/Load Button */}
-      <button
+      <Button
         onClick={() => setShowSaveMenu(true)}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors cursor-pointer"
       >
         Save/Load
-      </button>
+      </Button>
 
       {/* Main Save/Load Dialog */}
       <dialog
