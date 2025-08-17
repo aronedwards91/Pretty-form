@@ -2,12 +2,13 @@ import schema from "../form/cyoa-schema.json";
 import { Form } from "@rjsf/daisyui";
 import validator from "@rjsf/validator-ajv8";
 import initFormData from "./init-form-data.json";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SaveMenu from "./SaveMenu";
 
 function App() {
   console.log(">>>initFormData", initFormData);
   console.log(">>>import.meta.env.VITE_APP_URL", import.meta.env.VITE_APP_URL);
+  const [formData, setFormData] = useState(initFormData);
 
   const handleSubmit = (e) => {
     console.log(">>>handleSubmit", e);
@@ -54,8 +55,7 @@ function App() {
   }, []);
 
   const handleLoad = (data) => {
-    console.log(">>>handleLoad", data);
-    formRef.current.setFormData(data);
+    setFormData(data);
   };
 
   return (
@@ -73,7 +73,8 @@ function App() {
             schema={schema}
             validator={validator}
             onSubmit={handleSubmit}
-            formData={initFormData}
+            formData={formData}
+            onChange={(e) => setFormData(e.formData)}
           />
         </div>
 

@@ -75,6 +75,7 @@ const SaveMenu = ({ onLoad, formRef }) => {
   const handleLoad = (slotNumber) => {
     const saveData = saves[slotNumber];
     if (saveData && onLoad) {
+      console.log("Loading save data:", saveData.data);
       onLoad(saveData.data);
       setShowSaveMenu(false);
     }
