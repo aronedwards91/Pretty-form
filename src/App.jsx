@@ -6,19 +6,15 @@ import { useEffect, useRef, useState } from "react";
 import SaveMenu from "./SaveMenu";
 
 function App() {
-  console.log(">>>initFormData", initFormData);
-  console.log(">>>import.meta.env.VITE_APP_URL", import.meta.env.VITE_APP_URL);
   const [formData, setFormData] = useState(initFormData);
 
   const handleSubmit = (e) => {
-    console.log(">>>handleSubmit", e);
     msgToIframe(e.formData);
   };
 
   function msgToIframe(data) {
     // include type:config
     const iframe = document.getElementById("cross_domain_page");
-    console.log("1>>>msgToIframe", data);
     if (iframe) {
       iframe.contentWindow.postMessage(
         { type: "config", config: data },
