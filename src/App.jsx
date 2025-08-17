@@ -52,6 +52,7 @@ function App() {
 
   const handleLoad = (data) => {
     setFormData(data);
+    msgToIframe(data);
   };
 
   return (

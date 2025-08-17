@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 
 const SAVE_KEY = "formSaves";
-const SAVE_SLOT_COUNT = 10;
+const SAVE_SLOT_COUNT = 24;
 
 const SaveMenu = ({ onLoad, formRef }) => {
   const [saves, setSaves] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [saveName, setSaveName] = useState("");
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [deleteSlot, setDeleteSlot] = useState(null);
   const [showSaveMenu, setShowSaveMenu] = useState(false);
   const dialogRef = useRef(null);
@@ -80,21 +79,6 @@ const SaveMenu = ({ onLoad, formRef }) => {
     }
   };
 
-  const handleDelete = (slotNumber) => {
-    const newSaves = { ...saves };
-    delete newSaves[slotNumber];
-    setSaves(newSaves);
-    setShowConfirmDelete(false);
-    setDeleteSlot(null);
-  };
-
-  const confirmDelete = (slotNumber) => {
-    setDeleteSlot(slotNumber);
-    setShowConfirmDelete(true);
-    if (confirmDialogRef.current) {
-      confirmDialogRef.current.showModal();
-    }
-  };
 
   const formatDate = (timestamp) => {
     return new Date(timestamp).toLocaleString();
@@ -112,8 +96,26 @@ const SaveMenu = ({ onLoad, formRef }) => {
     setSaveName("");
   };
 
+  const requestDelete = (slotNumber) => {
+    setDeleteSlot(slotNumber);
+    if (confirmDialogRef.current) {
+      confirmDialogRef.current.showModal();
+    }
+  };
+
+  const handleDelete = (slotNumber) => {
+    const newSaves = [ ...saves ];
+    delete newSaves[slotNumber];
+    console.log(">>>handleDelete", newSaves);
+    setSaves(newSaves);
+    localStorage.setItem(SAVE_KEY, JSON.stringify(newSaves));
+    setDeleteSlot(null);
+    if (confirmDialogRef.current) {
+      confirmDialogRef.current.close();
+    }
+  };
+
   const handleConfirmDeleteClose = () => {
-    setShowConfirmDelete(false);
     setDeleteSlot(null);
     if (confirmDialogRef.current) {
       confirmDialogRef.current.close();
@@ -187,7 +189,7 @@ const SaveMenu = ({ onLoad, formRef }) => {
                                 Load
                               </button>
                               <button
-                                onClick={() => confirmDelete(slotNumber)}
+                                onClick={() => requestDelete(slotNumber)}
                                 className="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 rounded"
                               >
                                 Delete
@@ -298,7 +300,7 @@ const SaveMenu = ({ onLoad, formRef }) => {
       {/* Delete Confirmation Dialog */}
       <dialog
         ref={confirmDialogRef}
-        className="bg-white rounded-lg p-6 max-w-md w-full mx-4 backdrop:bg-black backdrop:bg-opacity-50"
+        className="mx-auto my-auto bg-white rounded-lg p-6 max-w-md w-full backdrop:bg-black"
         onClose={handleConfirmDeleteClose}
       >
         <h3 className="text-lg font-semibold mb-4">Confirm Delete</h3>
